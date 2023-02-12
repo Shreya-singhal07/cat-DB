@@ -119,7 +119,7 @@ students.department_id = departments.department_id;
 ```
 
 ### Create Employees table
-
+```sql
 CREATE TABLE employees (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
@@ -141,23 +141,10 @@ VALUES
   ('Bleh1', 4552.50, 1, '2022-01-02');
   ('Bleh', 4550.50, 1, '2022-01-02');
 
+```
 
-INSERT INTO employees (name, salary, department_id, hire_date)
-VALUES 
-  ('Tom', 4550.50, 1, '2022-01-01'),
-  ('John', 5100.75, 1, '2022-01-01'),
-  ('Tina', 5550.25, 1, '2022-01-01'),
-  ('Jane', 6100.50, 2, '2022-04-01'),
-  ('Bob', 7200.25, 2, '2022-04-01'),
-  ('Tim', 7750.75, 2, '2022-04-01'),
-  ('Sam', 8000.00, 3, '2022-08-01'),
-  ('Tara', 8500.00, 3, '2022-08-01');
-  ('Bleh1', 4552.50, 1, '2022-01-02');
-  ('Bleh', 4550.50, 1, '2022-01-02');
-  
-  
 ### Select all Employees
-
+```sql
 select * from employees;
  id | name | salary  | department_id | hire_date  
 ----+------+---------+---------------+------------
@@ -172,9 +159,10 @@ select * from employees;
   9 | Bleh  | 4550.50 |             1 | 2022-01-02
  10 | Bleh1 | 4552.50 |             1 | 2022-01-02
 (10 rows)
+```
 
 ### Non-aggregate function
-
+```sql
 select id, name, salary, department_id, hire_date, round(salary) as rounded_salary from employees;
  id | name  | salary  | department_id | hire_date  | rounded_salary 
 ----+-------+---------+---------------+------------+----------------
@@ -190,20 +178,27 @@ select id, name, salary, department_id, hire_date, round(salary) as rounded_sala
  10 | Bleh1 | 4552.50 |             1 | 2022-01-02 |           4553
 (10 rows)
 
-### Aggregate function
 
+ ```
+ 
+ ### Aggregate function
+```sql 
  select  sum(salary) as salary_sum from employees;
  salary_sum 
 ------------
    61856.00
 (1 row)
+```
 
 ### Aggregate function: FAIL
-
+```sql
 select  id, sum(salary) as salary_sum from employees;
 ERROR:  column "employees.id" must appear in the GROUP BY clause or be used in an aggregate function
 LINE 1: select  id, sum(salary) as salary_sum from employees;
-Group by: Single Column
+```
+
+### Group by: Single Column
+```sql
 select department_id, sum(salary) from employees group by department_id; 
  department_id |   sum    
 ---------------+----------
@@ -212,8 +207,11 @@ select department_id, sum(salary) from employees group by department_id;
              1 | 24304.50
 (3 rows)
 
-### Group by: Multiple columns
+```
 
+
+### Group by: Multiple columns
+```sql
 select department_id, hire_date, sum(salary) from employees group by department_id, hire_date; 
  department_id | hire_date  |   sum    
 ---------------+------------+----------
@@ -222,9 +220,11 @@ select department_id, hire_date, sum(salary) from employees group by department_
              1 | 2022-01-01 | 15201.50
              2 | 2022-04-01 | 21051.50
 (4 rows)
+```
+
 
 ### Group by: With Having Clause
-
+```sql
 Order of execution is important, notice that having clause cann't access salary_sum but sum(salary)
 select department_id, hire_date, sum(salary) as salary_sum from employees group by department_id, hire_date having sum(salary) > 10000;  
  department_id | hire_date  | salary_sum 
@@ -233,3 +233,10 @@ select department_id, hire_date, sum(salary) as salary_sum from employees group 
              1 | 2022-01-01 |   15201.50
              2 | 2022-04-01 |   21051.50
 (3 rows)
+
+```
+
+
+
+
+
