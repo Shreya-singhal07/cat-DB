@@ -117,3 +117,92 @@ students.department_id = departments.department_id;
          10 | St3          |             2 |             2 | Mathematics      | Dr. Johnson
 (3 rows)
 ```
+
+Create Employees table
+CREATE TABLE employees (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  salary NUMERIC(10,2),
+  department_id INT,
+  hire_date DATE
+);
+
+INSERT INTO employees (name, salary, department_id, hire_date)
+VALUES 
+  ('Tom', 4550.50, 1, '2022-01-01'),
+  ('John', 5100.75, 1, '2022-01-01'),
+  ('Tina', 5550.25, 1, '2022-01-01'),
+  ('Jane', 6100.50, 2, '2022-04-01'),
+  ('Bob', 7200.25, 2, '2022-04-01'),
+  ('Tim', 7750.75, 2, '2022-04-01'),
+  ('Sam', 8000.00, 3, '2022-08-01'),
+  ('Tara', 8500.00, 3, '2022-08-01');
+  ('Bleh1', 4552.50, 1, '2022-01-02');
+  ('Bleh', 4550.50, 1, '2022-01-02');
+Select all Employees
+select * from employees;
+ id | name | salary  | department_id | hire_date  
+----+------+---------+---------------+------------
+  1 | Tom  | 4550.50 |             1 | 2022-01-01
+  2 | John | 5100.75 |             1 | 2022-01-01
+  3 | Tina | 5550.25 |             1 | 2022-01-01
+  4 | Jane | 6100.50 |             2 | 2022-04-01
+  5 | Bob  | 7200.25 |             2 | 2022-04-01
+  6 | Tim  | 7750.75 |             2 | 2022-04-01
+  7 | Sam  | 8000.00 |             3 | 2022-08-01
+  8 | Tara | 8500.00 |             3 | 2022-08-01
+  9 | Bleh  | 4550.50 |             1 | 2022-01-02
+ 10 | Bleh1 | 4552.50 |             1 | 2022-01-02
+(10 rows)
+Non-aggregate function
+select id, name, salary, department_id, hire_date, round(salary) as rounded_salary from employees;
+ id | name  | salary  | department_id | hire_date  | rounded_salary 
+----+-------+---------+---------------+------------+----------------
+  1 | Tom   | 4550.50 |             1 | 2022-01-01 |           4551
+  2 | John  | 5100.75 |             1 | 2022-01-01 |           5101
+  3 | Tina  | 5550.25 |             1 | 2022-01-01 |           5550
+  4 | Jane  | 6100.50 |             2 | 2022-04-01 |           6101
+  5 | Bob   | 7200.25 |             2 | 2022-04-01 |           7200
+  6 | Tim   | 7750.75 |             2 | 2022-04-01 |           7751
+  7 | Sam   | 8000.00 |             3 | 2022-08-01 |           8000
+  8 | Tara  | 8500.00 |             3 | 2022-08-01 |           8500
+  9 | Bleh  | 4550.50 |             1 | 2022-01-02 |           4551
+ 10 | Bleh1 | 4552.50 |             1 | 2022-01-02 |           4553
+(10 rows)
+
+Aggregate function
+ select  sum(salary) as salary_sum from employees;
+ salary_sum 
+------------
+   61856.00
+(1 row)
+Aggregate function: FAIL
+select  id, sum(salary) as salary_sum from employees;
+ERROR:  column "employees.id" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select  id, sum(salary) as salary_sum from employees;
+Group by: Single Column
+select department_id, sum(salary) from employees group by department_id; 
+ department_id |   sum    
+---------------+----------
+             3 | 16500.00
+             2 | 21051.50
+             1 | 24304.50
+(3 rows)
+Group by: Multiple columns
+select department_id, hire_date, sum(salary) from employees group by department_id, hire_date; 
+ department_id | hire_date  |   sum    
+---------------+------------+----------
+             3 | 2022-08-01 | 16500.00
+             1 | 2022-01-02 |  9103.00
+             1 | 2022-01-01 | 15201.50
+             2 | 2022-04-01 | 21051.50
+(4 rows)
+Group by: With Having Clause
+Order of execution is important, notice that having clause cann't access salary_sum but sum(salary)
+select department_id, hire_date, sum(salary) as salary_sum from employees group by department_id, hire_date having sum(salary) > 10000;  
+ department_id | hire_date  | salary_sum 
+---------------+------------+------------
+             3 | 2022-08-01 |   16500.00
+             1 | 2022-01-01 |   15201.50
+             2 | 2022-04-01 |   21051.50
+(3 rows)
