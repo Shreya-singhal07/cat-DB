@@ -7,6 +7,7 @@
 <img width="651" alt="image" src="https://user-images.githubusercontent.com/69424250/216418126-8ead3ce1-3544-4195-81c7-db514848723d.png">
 
 <img width="1029" alt="image" src="https://user-images.githubusercontent.com/69424250/218539334-44521b3f-c8f5-43d3-8648-2458fd2da5b4.png">
+<img width="629" alt="image" src="https://user-images.githubusercontent.com/69424250/218539769-63dc77d3-8d7d-4e08-aa34-7f9612c4f16a.png">
 
 
 ### Students and Departments table
