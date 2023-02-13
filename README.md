@@ -6,6 +6,8 @@
 
 <img width="651" alt="image" src="https://user-images.githubusercontent.com/69424250/216418126-8ead3ce1-3544-4195-81c7-db514848723d.png">
 
+<img width="1029" alt="image" src="https://user-images.githubusercontent.com/69424250/218539334-44521b3f-c8f5-43d3-8648-2458fd2da5b4.png">
+
 
 ### Students and Departments table
 ```sql
